@@ -16,7 +16,7 @@ div#screen {
     width: 100%;
     height: 100%;
     background-color: black;
-    z-index: 1;
+    z-index: 4;
 
     transition: .3s ease-in-out;
 }
@@ -83,28 +83,32 @@ main {
     border-image-width: 10px;
     background-color: rgb(20, 10, 25);
     border-radius: 10px 10px 10px 10px;
-    padding: 10px 15px 10px 15px;
+    padding: 35px 25px 25px 25px;
+    z-index: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    min-width: 600px;
+    height: auto;
+    min-height: 75px;
+    background-color: #140A19;
+    text-align: center;
   }
 
+@media screen and (max-width: 600px) {
+    main {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        min-height: 75px;
+    }
+}
 
-html { background-color: #140A19; background-image: none; cursor: auto }
-main {
-position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 40%;
-height: 50%;
-background-color: rgb(20, 10, 25);
-text-align: center;
-}
-main {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-margin: 0;
-}
+
+html { background-color: #000000; background-image: none; cursor: auto }
+
 
 footer {
     position: fixed;
