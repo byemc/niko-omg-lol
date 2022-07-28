@@ -28,7 +28,7 @@
                 </tr>
             </table>
             <div id="youaccept">
-                <p><button id="offeraccept">Accept</button> <button id="offerdecline">Decline</button></p>
+                <p><button onclick="acceptOffer()" id="offeraccept">Accept</button> <button onclick="declineOffer()" id="offerdecline">Decline</button></p>
             </div>
         </div>
 
@@ -120,6 +120,32 @@
             }
 
         });
+
+        let acceptOffer = () => {
+            offerings.innerHTML = "<p>[Niko is happy with the deal]</p>";
+            if (Math.floor(Math.random() * 3) == 0) {
+                document.getElementById("niko").src = "/img/niko_83c.png";
+            } else {
+                document.getElementById("niko").src = "/img/nikopancakes.png";
+            }
+            setTimeout(() => {
+                offerings.style.opacity = "0";
+                setTimeout(() => {
+                    offerings.style.display = "none";
+                }, 500);
+            }, 4000);
+        }
+
+        let declineOffer = () => {
+            offerings.innerHTML = "<p>[Niko is upset with the deal]</p>";
+            document.getElementById("niko").src = "/img/niko_cry.png";
+            setTimeout(() => {
+                offerings.style.opacity = "0";
+                setTimeout(() => {
+                    offerings.style.display = "none";
+                }, 500);
+            }, 4000);
+        }
 
     </script>
 </body>
