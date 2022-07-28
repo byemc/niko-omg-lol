@@ -19,7 +19,7 @@
     </div>
     
     <main>
-        <img id="niko" src="/img/wm_upset.webp" alt="World Machine as Niko looking upset.">
+        <img id="niko" src="/img/en_upset.png" alt="World Machine as Niko looking upset.">
         <h1>404 Not Found</h1>
         <p>Please go <a href="/">home</a>.</p>
     </main>
@@ -94,12 +94,12 @@
             let niko_head = document.getElementById("niko");
 
             setInterval(() => {
-                if (niko_head.src.includes("left")) {
-                    niko_head.src = "/img/wm_upset.webp";
+                if (niko_head.src.includes("2")) {
+                    niko_head.src = "/img/en_upset.png";
                     console.log("hit! left");
                     return;
                 } else {
-                    niko_head.src = "/img/wm_upset_left.webp";
+                    niko_head.src = "/img/en_upset2.png";
                     console.log("hit! right");
                     return;
                 }
