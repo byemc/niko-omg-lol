@@ -16,12 +16,28 @@
         <h1>niko</h1>
         <br>
         <button id="offering">make an offering</button>
+        <div id="offerings">
+            <table>
+                <tr>
+                    <th>Niko gets</th>
+                    <th>You receive</th>
+                </tr>
+                <tr>
+                    <td id="nikogets"></td>
+                    <td id="youget"></td>
+                </tr>
+            </table>
+            <div id="youaccept">
+                <p><button id="offeraccept">Accept</button> <button id="offerdecline">Decline</button></p>
+            </div>
+        </div>
+
     </main>
 
     <footer>
         <p>Content made by <a href="https://bye.omg.lol">Bye</a> | Design <del>stolen</del> borrowed from <a href="https://sus.omg.lol/">Vukky's</a> 
             <a href="https://sus.omg.lol/js/antiweb3.html">Anti-Web 3</a> page and based on <a href="https://oneshot-game.com">OneShot</a>.</p>
-        <p>Sprites of Niko from OneShot.</p>
+        <p>Music, sprites and sound effects are from OneShot.</p>
     </footer>
 
     <script>
@@ -48,31 +64,61 @@
         // give all buttons an event listener for hover
         document.querySelectorAll('button').forEach(function(button) {
             button.addEventListener('mouseover', function() {
-                audio = new Audio('/oshover.wav');
+                audio = new Audio('/sound/menu_cursor.wav');
                 audio.play();
             });
             button.addEventListener('click', function() {
-                audio = new Audio('/ospling.wav');
+                audio = new Audio('/sound/menu_decision.wav');
                 audio.play();
             });
         });
 
-        offering_button = document.getElementById("offering");
-        offering_button.addEventListener('click', function() {
-            body = document.getElementsByTagName("main")[0];
-            document.getElementById("niko").src = "/img/nikopancakes.png";
-            
-            offerMessage = document.createElement("div");
-            offerMessage.innerHTML = `[ You are offering: ]<br>
-            [ $30 for their plushie ]<br>
-            [ all your possesions ]<br>
-            [ $800 for a new roomba ]<br>
-            [ 1,000,000 free pancakes ]<br>
-            [ deletion of your Twitter and Reddit accounts ]<br>
-            <br>[ Niko appriciates your offer ]<br>
-            [ No take backs. ] `;
+        niko_offerings_list = [
+            "cuteness",
+            "Twitter deletion request"
+        ]
 
-            body.appendChild(offerMessage);
+        your_offerings_list = [
+            "\"Not a cat\" certificate",
+            "A new roomba",
+            "All your personal possesions",
+            "A shit ton of pancakes",
+        ]
+
+        offering_button = document.getElementById("offering");
+        offerings = document.getElementById("offerings");
+        nikogets = document.getElementById("nikogets");
+        youget = document.getElementById("youget")
+        offering_button.addEventListener('click', function() {
+            offerings.style.display = "block";
+            setTimeout(() => {
+                offerings.style.opacity = "1";
+            }, 100);
+            offering_button.style.display = "none";
+            
+            // add a UL element to nikogets and youget
+            nikogets.innerHTML = "<ul id=\"whatnikogets\"></ul>";
+            youget.innerHTML = "<ul id=\"whatyouget\"></ul>";
+
+            whatnikogets = document.getElementById("whatnikogets");
+            whatyouget = document.getElementById("whatyouget");
+
+            for (offering in your_offerings_list) {
+                // create a mew li element and add it to the ul
+                var li = document.createElement("li");
+                li.innerHTML = your_offerings_list[offering];
+
+                whatnikogets.appendChild(li);
+            }
+
+            for (offering in niko_offerings_list) {
+                // create a mew li element and add it to the ul
+                var li = document.createElement("li");
+                li.innerHTML = niko_offerings_list[offering];
+
+                whatyouget.appendChild(li);
+            }
+
         });
 
     </script>

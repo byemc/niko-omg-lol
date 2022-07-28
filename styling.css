@@ -42,6 +42,40 @@ div#screen button {
     transform: translate(-50%, -50%);
 }
 
+div#offerings {
+    opacity: 0;
+    display: none;
+    transition-duration: 0.5s;
+}
+
+div#wm_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.299) 75%, rgba(0, 0, 0, 0) 100%);
+
+    z-index: 2;
+    transition: .5s ease-in-out;
+}
+
+span#wm_dialouge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+
+    font-size: 24px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 main {
     border-style: solid;
     border-image-source: url("/img/nikoborder.png");

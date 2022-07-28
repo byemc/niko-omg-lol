@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 N   Fo nd</title>
+
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+
+    <div onclick="letIn()" id="screen">
+        <button>click to enter</a>
+    </div>
+
+    <div id="wm_wrapper" onclick="advance()">
+        <span id="wm_dialouge">[If you see this, something is wrong.]<br>[Contact bye [at] omg.lol]</span>
+    </div>
+    
+    <main>
+        <img id="niko" src="/img/wm_upset.webp" alt="World Machine as Niko looking upset.">
+        <h1>404 Not Found</h1>
+        <p>Please go <a href="/">home</a>.</p>
+    </main>
+
+
+    <script>
+
+        wm_script = [
+            "[The path you entered is incorrect.]",
+            "[Please double-check your path.]"
+        ]
+
+        let advancing = false;
+        let dialouge_index = 0;
+
+        let letIn = () => {
+            // delete the screen
+            document.getElementById("screen").style.opacity = "0";
+            document.getElementById("wm_wrapper").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("screen").style.display = "none";
+            }, 500);
+
+            bgm = new Audio("/mus/AGod'sMachine.ogg");
+            bgm.loop = true;
+            bgm.play();
+            advance();
+        }
+
+        let advance = () => {
+            if (advancing) {
+                return;
+            }
+            advancing = true;
+            
+            if (document.getElementById("wm_wrapper").style.opacity != 0) {
+                document.getElementById("wm_wrapper").style.opacity = "0";
+            } else {
+                if (dialouge_index >= wm_script.length) {
+                    document.getElementById("wm_wrapper").style.display = "none";
+                    advancing = false;
+                    return;
+                }
+
+            document.getElementById("wm_dialouge").innerHTML = wm_script[dialouge_index];
+            dialouge_index++;
+            
+            setTimeout(() => {
+                document.getElementById("wm_wrapper").style.opacity = "1";
+                advancing = false;
+            }, 500);
+
+            return;
+        }
+
+            setTimeout(() => {
+                if (dialouge_index >= wm_script.length) {
+                document.getElementById("wm_wrapper").style.display = "none";
+                advancing = false;
+                return;
+            }
+
+            document.getElementById("wm_dialouge").innerHTML = wm_script[dialouge_index];
+            dialouge_index++;
+            
+            setTimeout(() => {
+                document.getElementById("wm_wrapper").style.opacity = "1";
+                advancing = false;
+            }, 500);
+            }, 500)
+
+            let niko_head = document.getElementById("niko");
+
+            setInterval(() => {
+                if (niko_head.src.includes("left")) {
+                    niko_head.src = "/img/wm_upset.webp";
+                    console.log("hit! left");
+                    return;
+                } else {
+                    niko_head.src = "/img/wm_upset_left.webp";
+                    console.log("hit! right");
+                    return;
+                }
+            }, 1500);
+       
+
+        }
+
+    </script>
+
+</body>
+</html>
