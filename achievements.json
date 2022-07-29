@@ -1,0 +1,13 @@
+[
+    {
+        "icon": "/img/niko_83c.png",
+        "name": "Trade accepted!",
+        "id": "trade_accept",
+        "description": "Give an offering to Niko."
+    },
+    {
+        "name": "N-- fou-d",
+        "id": "404",
+        "description": "looking for secrets, huh?"
+    }
+]

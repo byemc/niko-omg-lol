@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 N   Fo nd</title>
 
-    <link rel="stylesheet" href="styling.css">
+    <link rel="stylesheet" href="/styling.css">
+    <script src="/achievements.js">
+    </script>
+
 </head>
 <body>
 
@@ -29,7 +32,7 @@
 
         wm_script = [
             "[The path you entered is incorrect.]",
-            "[Please double-check your path.]"
+            "[Please double-check it, and try again.]"
         ]
 
         let advancing = false;
@@ -47,6 +50,7 @@
             bgm.loop = true;
             bgm.play();
             advance();
+            grantAchievement("404");
         }
 
         let advance = () => {
