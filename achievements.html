@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Niko</title>
     <link rel="stylesheet" href="/styling.css">
+    <link rel="prefetch" href="/achievements.json" as="script">
+
+
     <script src="/achievements.js"></script>
     <style>
         #title {
@@ -48,10 +51,14 @@
 
     <main>
         <h1 id="title">achievements</h1>
-        <span id="ach_progress"><span id="ach_complete">1</span> of <span id="ach_total">3</span> (<span id="ach_percent">33%</span>) complete
-                                <progress value="1" max="3" id="ach_progress_bar"></progress> </span>
+        <span id="ach_progress"><span id="ach_complete">0</span> of <span id="ach_total">0</span> (<span id="ach_percent">Loading...</span>) complete
+                                <progress value="0" max="0" id="ach_progress_bar"></progress> </span>
         <div id="ach_list">
-
+            <div id="starting_ach" class="achievement">
+                <img class="ach_icon" src="/img/en_starting.png" alt="Starting">
+                <h2>Loading...</h2>
+                <p>Becuase of timing issues, I'm putting this delay here.</p>
+            </div>
         </div>
     </main>
 
@@ -98,6 +105,7 @@ window.onload = function() {
 
             let validCookies = [];
 
+            setTimeout(() => {
             // check each cookie to see if it's a valid achievement
             for (cookie in cookies) {
                 console.log(cookies[cookie]);
@@ -130,7 +138,22 @@ window.onload = function() {
                                     <h2 class="ach_title">${ach.name}</h2>
                                     <p class="ach_desc">${ach.description}</p>`;
                 document.getElementById("ach_list").appendChild(ach_el);
-            }
+            }  
+
+            // remove the starting achievement
+            document.getElementById("starting_ach").remove();
+            
+            // update the progress bar
+            document.getElementById("ach_complete").innerHTML = validCookies.length;
+            document.getElementById("ach_total").innerHTML = achievements.length;
+            document.getElementById("ach_percent").innerHTML = Math.round(validCookies.length / achievements.length * 100) + "%";
+
+            // update the progress bar
+            document.getElementById("ach_progress_bar").value = validCookies.length;
+            document.getElementById("ach_progress_bar").max = achievements.length;
+
+            }, 500);
+
         }
 
         

@@ -11,7 +11,7 @@ fetch("/achievements.json")
 
     .then(data => {
         achievements = data;
-        console.log("%cDEBUG::%cachievements: " + JSON.stringify(achievements), "color: #0af; font-weight: bold;", "all: unset;");
+        // console.log("%cDEBUG::%cachievements: " + JSON.stringify(achievements), "color: #0af; font-weight: bold;", "all: unset;");
     })
 
 grantedAchievements = document.cookie.split("; ").map(cookie => cookie.split("=")[0]);
@@ -32,7 +32,7 @@ const findAchievement = (achievement_id) => {
 // filter the achievements based on grantedAchievements
 const filterAchievements = () => {
     var filteredAchievements = achievements.filter(achievement => !grantedAchievements.includes(achievement.id));
-    console.log("%cDEBUG::%cfilteredAchievements: " + JSON.stringify(filteredAchievements), "color: #0af; font-weight: bold;", "all: unset;");
+    // console.log("%cDEBUG::%cfilteredAchievements: " + JSON.stringify(filteredAchievements), "color: #0af; font-weight: bold;", "all: unset;");
     return filteredAchievements;
 }
 

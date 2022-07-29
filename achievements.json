@@ -15,5 +15,11 @@
         "name": "N-- fou-d",
         "id": "404",
         "description": "looking for secrets, huh?"
+    },
+    {
+        "name": "Impossible",
+        "id": "browtf",
+        "description": "bro how tf do you have this",
+        "icon": "/img/niko_huh.png"
     }
 ]
