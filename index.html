@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Niko</title>
     <link rel="stylesheet" href="/styling.css">
-    <script src="/achievements.js"></script>
+
 </head>
 <body>
     <div onclick="letIn()" id="screen">
@@ -41,6 +41,7 @@
         <p>Music, sprites and sound effects are from OneShot.</p>
     </footer>
 
+    <script src="/achievements.js"></script>
     <script>
         let letIn = () => {
             // delete the screen
@@ -124,6 +125,7 @@
 
         let acceptOffer = () => {
             offerings.innerHTML = "<p>[Niko is happy with the deal]</p>";
+            grantAchievement("trade_accept")
             if (Math.floor(Math.random() * 3) == 0) {
                 document.getElementById("niko").src = "/img/niko_83c.png";
             } else {
