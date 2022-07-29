@@ -44,21 +44,24 @@
     <script src="/achievements.js"></script>
     <script>
 
-        document.onload = function() {
-            // autoplay checker
-            var autoplay_test = new Audio("/sound/silence.wav");
-            var the_actual_test = autoplay_test.play();
+window.onload = function() {
+                    // autoplay checker
+                    var autoplay_test = new Audio("/sound/silence.wav");
+                    var the_actual_test = autoplay_test.play();
 
-            if (the_actual_test !== undefined) {
-                the_actual_test.then(_ => {
-                    // Autoplay started!
-                    document.getElementById("screen").style.display = "none";
-                }).catch(error => {
-                    // Autoplay was prevented.
-                    document.getElementById("screen").style.display = "block";
-                });
-            }
-        }
+                    if (the_actual_test !== undefined) {
+                        the_actual_test.then(_ => {
+                            // Autoplay started!
+                            document.getElementById("screen").style.display = "none";
+                            letIn();
+                            console.log("autoplay started");
+                        }).catch(error => {
+                            // Autoplay was prevented.
+                            document.getElementById("screen").style.display = "block";
+                            console.log("autoplay prevented");
+                        });
+                    }
+                }
 
         let letIn = () => {
             // delete the screen

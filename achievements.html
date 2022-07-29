@@ -62,6 +62,26 @@
     </footer>
 
     <script>
+
+window.onload = function() {
+                    // autoplay checker
+                    var autoplay_test = new Audio("/sound/silence.wav");
+                    var the_actual_test = autoplay_test.play();
+
+                    if (the_actual_test !== undefined) {
+                        the_actual_test.then(_ => {
+                            // Autoplay started!
+                            document.getElementById("screen").style.display = "none";
+                            console.log("autoplay started");
+                            letIn();
+
+                        }).catch(error => {
+                            // Autoplay was prevented.
+                            document.getElementById("screen").style.display = "block";
+                            console.log("autoplay prevented");
+                        });
+                    }
+                }
         let letIn = () => {
             // delete the screen
             document.getElementById("screen").style.opacity = "0";
