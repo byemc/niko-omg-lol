@@ -32,7 +32,7 @@ function grantAchievement (achievement_id) {
     }
 
     // display the achievement
-    const ach_container = `<div id="ach_container"><img id="ach_icon" src="${achievement.icon}" alt="Achievement icon">
+    const ach_container = `<div id="ach_container"><img id="ach_icon" src="${achievement.icon}">
     <span id="ach_subtitle">Achievement Get!</span><span id="ach_title">${achievement.name}</span></div>`
     // add the container to the page
     document.body.insertAdjacentHTML("beforeend", ach_container);
