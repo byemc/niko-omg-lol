@@ -17,6 +17,27 @@ fetch("/achievements.json")
 grantedAchievements = document.cookie.split("; ").map(cookie => cookie.split("=")[0]);
 console.log("%cDEBUG::%cgrantedAchievements: " + JSON.stringify(grantedAchievements), "color: #0af; font-weight: bold;", "all: unset;");
 
+const findAchievement = (achievement_id) => {
+    // find the achievement in the list
+    console.log(achievement_id)
+    var achievement = achievements.find(achievement => achievement.id == achievement_id);
+    console.log(achievement)
+    if (!achievement) {
+        console.log("%cDEBUG::%cachievement not found: " + achievement_id, "color: #0af; font-weight: bold;", "all: unset;");
+        return undefined;
+    }
+    return achievement;
+}
+
+// filter the achievements based on grantedAchievements
+const filterAchievements = () => {
+    var filteredAchievements = achievements.filter(achievement => !grantedAchievements.includes(achievement.id));
+    console.log("%cDEBUG::%cfilteredAchievements: " + JSON.stringify(filteredAchievements), "color: #0af; font-weight: bold;", "all: unset;");
+    return filteredAchievements;
+}
+
+filterAchievements();
+
 function grantAchievement (achievement_id) {
     // check if the achievement is already granted
     if (grantedAchievements.includes(achievement_id)) {
@@ -26,6 +47,7 @@ function grantAchievement (achievement_id) {
 
     // find the achievement in the list
     var achievement = achievements.find(achievement => achievement.id == achievement_id);
+    console.log(achievement)
     if (!achievement) {
         console.log("%cDEBUG::%cachievement not found: " + achievement_id, "color: #0af; font-weight: bold;", "all: unset;");
         return;
@@ -40,6 +62,8 @@ function grantAchievement (achievement_id) {
     <span id="ach_subtitle">Achievement Get!</span><span id="ach_title">${achievement.name}</span></div>`
     // add the container to the page
     document.body.insertAdjacentHTML("beforeend", ach_container);
+    sfx = new Audio("/sound/get_item.wav");
+    sfx.play();
 
     grantedAchievements.push(achievement_id);
     document.cookie = achievement_id + "=true; max-age=31536000";
@@ -50,7 +74,7 @@ function grantAchievement (achievement_id) {
         setTimeout(() => {
             document.getElementById("ach_container").remove();
         }, 1000);
-    }, 5000);
+    }, 5000); 
 
 }
 

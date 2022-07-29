@@ -53,6 +53,19 @@
             grantAchievement("404");
         }
 
+        // listen for keypresses
+        window.addEventListener("keydown", function(event) {
+            switch (event.code) {
+                case "Enter": 
+                case "Space": 
+                case "KeyZ": 
+                    if (!advancing) {
+                        advance();
+                    }
+                    break;
+            }
+        }, true);
+
         let advance = () => {
             if (advancing) {
                 return;

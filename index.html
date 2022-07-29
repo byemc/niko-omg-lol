@@ -43,6 +43,23 @@
 
     <script src="/achievements.js"></script>
     <script>
+
+        document.onload = function() {
+            // autoplay checker
+            var autoplay_test = new Audio("/sound/silence.wav");
+            var the_actual_test = autoplay_test.play();
+
+            if (the_actual_test !== undefined) {
+                the_actual_test.then(_ => {
+                    // Autoplay started!
+                    document.getElementById("screen").style.display = "none";
+                }).catch(error => {
+                    // Autoplay was prevented.
+                    document.getElementById("screen").style.display = "block";
+                });
+            }
+        }
+
         let letIn = () => {
             // delete the screen
             document.getElementById("screen").style.opacity = "0";
@@ -66,11 +83,23 @@
         // give all buttons an event listener for hover
         document.querySelectorAll('button').forEach(function(button) {
             button.addEventListener('mouseover', function() {
+                // get the ID of the button
+                
                 audio = new Audio('/sound/menu_cursor.wav');
                 audio.play();
             });
             button.addEventListener('click', function() {
-                audio = new Audio('/sound/menu_decision.wav');
+                let id = this.id;
+                if (id == "offeraccept") {
+                    audio = new Audio('/sound/get_item.wav');
+                    audio.play();
+                } else if (id == "offerdecline") {
+                    audio = new Audio('/sound/menu_cancel.wav');
+                    audio.play();
+                } else {
+                    audio = new Audio('/sound/menu_decision.wav');
+                    audio.play();
+                }
                 audio.play();
             });
         });
@@ -125,7 +154,9 @@
 
         let acceptOffer = () => {
             offerings.innerHTML = "<p>[Niko is happy with the deal]</p>";
+            setTimeout(() => {
             grantAchievement("trade_accept")
+            }, 750);
             if (Math.floor(Math.random() * 3) == 0) {
                 document.getElementById("niko").src = "/img/niko_83c.png";
             } else {
@@ -141,7 +172,9 @@
 
         let declineOffer = () => {
             offerings.innerHTML = "<p>[Niko is upset with the deal]</p>";
-            grantAchievement("trade_decline");
+            setTimeout(() => {
+            grantAchievement("trade_decline")
+            }, 750);
             document.getElementById("niko").src = "/img/niko_cry.png";
             setTimeout(() => {
                 offerings.style.opacity = "0";

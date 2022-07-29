@@ -5,7 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Niko</title>
     <link rel="stylesheet" href="/styling.css">
+    <script src="/achievements.js"></script>
+    <style>
+        #title {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        #ach_list {
+            padding-top: 15px;
+        }
 
+        .achievement {
+            width: 230px;
+            display: inline-block;
+            transition: 0.5s transform ease-in-out;
+            background-color: #100b17aa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .achievement:hover {
+            /* Increase the size of the achievement when hovered over */
+            transform: scale(1.2);
+        }
+
+        .ach_icon {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+
+    </style>
 </head>
 <body>
     <div onclick="letIn()" id="screen">
@@ -13,6 +47,12 @@
     </div>
 
     <main>
+        <h1 id="title">achievements</h1>
+        <span id="ach_progress"><span id="ach_complete">1</span> of <span id="ach_total">3</span> (<span id="ach_percent">33%</span>) complete
+                                <progress value="1" max="3" id="ach_progress_bar"></progress> </span>
+        <div id="ach_list">
+
+        </div>
     </main>
 
     <footer>
@@ -27,8 +67,52 @@
             document.getElementById("screen").style.opacity = "0";
             setTimeout(() => {
                 document.getElementById("screen").style.display = "none";
-                window.location.href = "/index.html";
             }, 500);
+
+            // from document.cookie, get all the cookies
+            let cookies = document.cookie.split("; ");
+            // loop through all the cookies, removing everything after the =
+            for (let i = 0; i < cookies.length; i++) {
+                cookies[i] = cookies[i].split("=")[0];
+            }
+
+            let validCookies = [];
+
+            // check each cookie to see if it's a valid achievement
+            for (cookie in cookies) {
+                console.log(cookies[cookie]);
+                console.log(cookie)
+                ach = findAchievement(cookies[cookie]);
+                console.log(ach);
+                if (!ach) {
+                    continue;
+                } else {
+                    validCookies.push(ach);
+                }
+            }
+
+            // sort the valid cookies by their id
+            validCookies.sort((a, b) => {
+                return a.id - b.id;
+            });
+
+            // display the valid cookies
+            for (let i = 0; i < validCookies.length; i++) {
+                console.log(validCookies[i].id);
+                let ach = validCookies[i];
+                ach = findAchievement(ach.id);
+                let ach_el = document.createElement("div");
+                if (!ach.icon) {
+                    ach.icon = "/img/cg_dream4_4_crop.png";
+                }
+                ach_el.className = "achievement";
+                ach_el.innerHTML = `<img class="ach_icon" src="${ach.icon}" alt="${ach.name}">
+                                    <h2 class="ach_title">${ach.name}</h2>
+                                    <p class="ach_desc">${ach.description}</p>`;
+                document.getElementById("ach_list").appendChild(ach_el);
+            }
         }
+
+        
     </script>
 </body>
