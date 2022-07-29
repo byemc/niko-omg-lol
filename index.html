@@ -141,6 +141,7 @@
 
         let declineOffer = () => {
             offerings.innerHTML = "<p>[Niko is upset with the deal]</p>";
+            grantAchievement("trade_decline");
             document.getElementById("niko").src = "/img/niko_cry.png";
             setTimeout(() => {
                 offerings.style.opacity = "0";

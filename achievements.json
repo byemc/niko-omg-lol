@@ -6,6 +6,12 @@
         "description": "Give an offering to Niko."
     },
     {
+        "icon": "/img/niko_cry.png",
+        "name": "trade declined",
+        "id": "trade_decline",
+        "description": "decline the offering to Niko"
+    },
+    {
         "name": "N-- fou-d",
         "id": "404",
         "description": "looking for secrets, huh?"

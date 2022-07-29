@@ -31,6 +31,10 @@ function grantAchievement (achievement_id) {
         return;
     }
 
+    if (!achievement.icon) {
+        achievement.icon = "/img/cg_dream4_4_crop.png";
+    }
+
     // display the achievement
     const ach_container = `<div id="ach_container"><img id="ach_icon" src="${achievement.icon}">
     <span id="ach_subtitle">Achievement Get!</span><span id="ach_title">${achievement.name}</span></div>`
