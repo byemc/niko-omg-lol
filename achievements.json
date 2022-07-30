@@ -21,5 +21,11 @@
         "id": "browtf",
         "description": "bro how tf do you have this",
         "icon": "/img/niko_huh.png"
+    },
+    {
+        "name": "Recursion",
+        "id": "recursion",
+        "description": "somehow get letIn() to run twice on this page (double-click the screen, but you'd need to have this to see this hint lol)",
+        "icon": "/img/recursion.png"
     }
 ]

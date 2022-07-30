@@ -70,6 +70,8 @@
 
     <script>
 
+        let letincount = 0;
+
 window.onload = function() {
                     // autoplay checker
                     var autoplay_test = new Audio("/sound/silence.wav");
@@ -90,11 +92,16 @@ window.onload = function() {
                     }
                 }
         let letIn = () => {
+            letincount++;
             // delete the screen
             document.getElementById("screen").style.opacity = "0";
             setTimeout(() => {
                 document.getElementById("screen").style.display = "none";
             }, 500);
+
+            if (letincount > 1) {
+                grantAchievement("recursion");
+            }
 
             // from document.cookie, get all the cookies
             let cookies = document.cookie.split("; ");
