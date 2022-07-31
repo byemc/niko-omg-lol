@@ -27,5 +27,12 @@
         "id": "recursion",
         "description": "somehow get letIn() to run twice on this page (double-click the screen, but you'd need to have this to see this hint lol)",
         "icon": "/img/recursion.png"
+    },
+    {
+        "name": "you can't do that",
+        "id": "cant_do_that",
+        "description": "Try to get the same achievement twice.",
+        "icon": "/img/niko_upset.png",
+        "sound": "/sound/pc_denied.wav"
     }
 ]

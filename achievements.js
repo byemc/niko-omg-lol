@@ -42,6 +42,12 @@ function grantAchievement (achievement_id) {
     // check if the achievement is already granted
     if (grantedAchievements.includes(achievement_id)) {
         console.log("%cDEBUG::%cachievement already granted: " + achievement_id, "color: #0af; font-weight: bold;", "all: unset;");
+        // check that the cant_do_that is not already granted
+        if (grantedAchievements.includes("cant_do_that")) {
+            console.log("%cDEBUG::%cachievement cant_do_that already granted", "color: #0af; font-weight: bold;", "all: unset;");
+        } else {
+            grantAchievement("cant_do_that");
+        }
         return;
     }
 
@@ -62,7 +68,12 @@ function grantAchievement (achievement_id) {
     <span id="ach_subtitle">Achievement Get!</span><span id="ach_title">${achievement.name}</span></div>`
     // add the container to the page
     document.body.insertAdjacentHTML("beforeend", ach_container);
-    sfx = new Audio("/sound/get_item.wav");
+    if (achievement.sound) {
+        // play the sound
+        var sfx = new Audio(achievement.sound);
+    } else {
+        sfx = new Audio("/sound/get_item.wav");
+    }
     sfx.play();
 
     grantedAchievements.push(achievement_id);
