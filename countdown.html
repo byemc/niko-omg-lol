@@ -5,13 +5,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown</title>
+    <link rel="stylesheet" href="./styling.css">
 </head>
 <body>
     <!-- This page counts down until OneShot: World Machine edition is released -->
 
+    <div id="nixie">
+        <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
+    </div>
+
     <script>
-        let releaseTime = 1663804800; // In the future it might be cool to let you put reminders?
-        var currentTime = new Date
+        let releaseTime = new Date("September 22, 2022 00:00"); // In the future it might be cool to let you put reminders?
+        let timer = document.getElementById("nixie")
+        
+        class Countdown {
+            constructor(time) {
+                time /= 1000
+                this.days    = Math.floor(((time/60)/60)/24);
+                let dayo     = (((time/60)/60)/24)-this.days;
+                this.hours   = Math.floor((dayo)*24);
+                let hro      = (dayo*24)-this.hours;
+                this.minutes = Math.floor((hro)*60);
+                let minover  = (hro*60)-this.minutes;
+                this.seconds = Math.floor(minover*60)
+            }
+        }
+
+        const updateShit = () => {
+            var currentTime = new Date(Date.now());
+            var timeUntilWM = releaseTime-currentTime;
+            
+            return new Countdown(timeUntilWM)
+            
+        }
+
+        console.log(updateShit())
+
+        setInterval(() => {
+            currentTime = new Date(Date.now());
+            let timeLeft = updateShit();
+
+            // add leading zeros to the day until it's 3 digits long
+            if (timeLeft.days < 10) {
+                timeLeft.days = "00" + timeLeft.days;
+            } else if (timeLeft.days < 100) {
+                timeLeft.days = "0" + timeLeft.days;
+            } 
+
+            // add leading zeros to the hours until it's 2 digits long
+            if (timeLeft.hours < 10) {
+                timeLeft.hours = "0" + timeLeft.hours;
+            }
+
+            // add leading zeros to the minutes until it's 2 digits long
+            if (timeLeft.minutes < 10) {
+                timeLeft.minutes = "0" + timeLeft.minutes;
+            }
+
+            // add leading zeros to the seconds until it's 2 digits long
+            if (timeLeft.seconds < 10) {
+                timeLeft.seconds = "0" + timeLeft.seconds;
+            }
+            
+
+
+            document.getElementById("count_days").innerText = timeLeft.days;
+            document.getElementById("count_hours").innerText = timeLeft.hours;
+            document.getElementById("count_mins").innerText = timeLeft.minutes;
+            document.getElementById("count_secs").innerText = timeLeft.seconds;
+
+        }, 1000)
 
     </script>
 </body>
