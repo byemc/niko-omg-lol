@@ -10,7 +10,7 @@
 <body>
     <!-- This page counts down until OneShot: World Machine edition is released -->
 
-    <canvas id="nixie">
+    <canvas width="500" height="86" id="nixie">
         <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
     </div>
 
@@ -82,6 +82,12 @@
                 "x": 56,
                 "y": 238,
             },
+            ":": {
+                "w": 16,
+                "h": 83,
+                "x": 161,
+                "y": 248,
+            }
 
         }
 
@@ -157,12 +163,32 @@
 
         // force assets to draw pixel-perfectly
         ctx.imageSmoothingEnabled = false;
+
+        var draw = (timeLeft) => {
+            // clear the canvas
+            ctx.clearRect(0, 0, timer.width, timer.height);
+
+            
+            // split each digit into its own image after making it a string
+            let days = timeLeft.days.toString().split("");
+            let hours = timeLeft.hours.toString().split("");
+            let minutes = timeLeft.minutes.toString().split("");
+            let seconds = timeLeft.seconds.toString().split("");
+            console.log(`days: ${days} hours: ${hours} minutes: ${minutes} seconds: ${seconds}`);
+
+
+            // draw each digit onto the canvas with a colon as a separator
+            for (let i = 0; i < days.length; i++) {
+                ctx.drawImage(nixieAssets, nAssetsLoc[days[i]].x, nAssetsLoc[days[i]].y, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h, i*32, 0, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h);
+            }
+            ctx.drawImage(nixieAssets, nAssetsLoc[":"].x, nAssetsLoc[":"].y, nAssetsLoc[":"].w, nAssetsLoc[":"].h, days.length*32, 0, nAssetsLoc[":"].w, nAssetsLoc[":"].h);
+
+        }
+        // draw();
         
         
         setInterval(() => {
-            ctx.fillStyle = "#100b17";
-            // clear the canvas
-            ctx.fillRect(0, 0, timer.width, timer.height);
+            
             currentTime = new Date(Date.now());
             let timeLeft = updateShit();
 
@@ -187,9 +213,15 @@
             if (timeLeft.seconds < 10) {
                 timeLeft.seconds = "0" + timeLeft.seconds; 
             }
-            
-            
-            ctx.drawImage(nixieAssets, nAssetsLoc["1"].x, nAssetsLoc["1"].y, nAssetsLoc["1"].w, nAssetsLoc["1"].h, 0, 0, nAssetsLoc["1"].w/2, nAssetsLoc["1"].h/2);
+
+            // make all the values in timeLeft into strings
+            timeLeft.days = timeLeft.days.toString();
+            timeLeft.hours = timeLeft.hours.toString();
+            timeLeft.minutes = timeLeft.minutes.toString();
+            timeLeft.seconds = timeLeft.seconds.toString();
+
+            console.log(timeLeft);
+            draw(timeLeft);
 
             document.getElementById("count_days").innerText = timeLeft.days;
             document.getElementById("count_hours").innerText = timeLeft.hours;
