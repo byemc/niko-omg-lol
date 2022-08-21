@@ -10,13 +10,93 @@
 <body>
     <!-- This page counts down until OneShot: World Machine edition is released -->
 
-    <div id="nixie">
+    <canvas id="nixie">
         <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
     </div>
 
     <script>
         let releaseTime = new Date("September 22, 2022 00:00"); // In the future it might be cool to let you put reminders?
-        let timer = document.getElementById("nixie")
+        let timer = document.getElementById("nixie");
+        let clicked = false;
+        let nixieAssets = new Image();
+        nixieAssets.src = "./img/countdown.png";
+
+        const nAssetsLoc = {
+            "1": {
+                "w": 32,
+                "h": 83,
+                "x": 8,
+                "y": 10,
+            }, 
+            "2": {
+                "w": 32,
+                "h": 83,
+                "x": 56,
+                "y": 10,
+            },
+            "3": {
+                "w": 32,
+                "h": 83,
+                "x": 104,
+                "y": 10,
+            },
+            "4": {
+                "w": 32,
+                "h": 83,
+                "x": 152,
+                "y": 10,
+            },
+            "5": {
+                "w": 32,
+                "h": 83,
+                "x": 8,
+                "y": 124,
+            },
+            "6": {
+                "w": 32,
+                "h": 83,
+                "x": 56,
+                "y": 124,
+            },
+            "7": {
+                "w": 32,
+                "h": 83,
+                "x": 104,
+                "y": 124,
+            },
+            "8": {
+                "w": 32,
+                "h": 83,
+                "x": 152,
+                "y": 124,
+            },
+            "9": {
+                "w": 32,
+                "h": 83,
+                "x": 8,
+                "y": 238,
+            },
+            "0": {
+                "w": 32,
+                "h": 83,
+                "x": 56,
+                "y": 238,
+            },
+
+        }
+
+        document.addEventListener('mousedown', () => {
+            console.log("clicked");
+            if (!clicked) {
+                clicked = true;
+                console.log("not clicked");
+                let mus = new Audio("./mus/Countdown.ogg");
+                mus.onloadeddata = () => {
+                    console.log("loaded");
+                    mus.play();
+                }
+            }
+        });
         
         class Countdown {
             constructor(time) {
@@ -41,7 +121,48 @@
 
         console.log(updateShit())
 
+        currentTime = new Date(Date.now());
+        let timeLeft = updateShit();
+
+        // add leading zeros to the day until it's 3 digits long
+        if (timeLeft.days < 10) {
+            timeLeft.days = "00" + timeLeft.days;
+        } else if (timeLeft.days < 100) {
+            timeLeft.days = "0" + timeLeft.days;
+        } 
+
+        // add leading zeros to the hours until it's 2 digits long
+        if (timeLeft.hours < 10) {
+            timeLeft.hours = "0" + timeLeft.hours;
+        }
+
+        // add leading zeros to the minutes until it's 2 digits long
+        if (timeLeft.minutes < 10) {
+            timeLeft.minutes = "0" + timeLeft.minutes;
+        }
+
+        // add leading zeros to the seconds until it's 2 digits long
+        if (timeLeft.seconds < 10) {
+            timeLeft.seconds = "0" + timeLeft.seconds; 
+        }
+
+
+
+        document.getElementById("count_days").innerText = timeLeft.days;
+        document.getElementById("count_hours").innerText = timeLeft.hours;
+        document.getElementById("count_mins").innerText = timeLeft.minutes;
+        document.getElementById("count_secs").innerText = timeLeft.seconds;
+
+        var ctx = timer.getContext("2d");
+
+        // force assets to draw pixel-perfectly
+        ctx.imageSmoothingEnabled = false;
+        
+        
         setInterval(() => {
+            ctx.fillStyle = "#100b17";
+            // clear the canvas
+            ctx.fillRect(0, 0, timer.width, timer.height);
             currentTime = new Date(Date.now());
             let timeLeft = updateShit();
 
@@ -51,7 +172,7 @@
             } else if (timeLeft.days < 100) {
                 timeLeft.days = "0" + timeLeft.days;
             } 
-
+            
             // add leading zeros to the hours until it's 2 digits long
             if (timeLeft.hours < 10) {
                 timeLeft.hours = "0" + timeLeft.hours;
@@ -64,10 +185,11 @@
 
             // add leading zeros to the seconds until it's 2 digits long
             if (timeLeft.seconds < 10) {
-                timeLeft.seconds = "0" + timeLeft.seconds;
+                timeLeft.seconds = "0" + timeLeft.seconds; 
             }
             
-
+            
+            ctx.drawImage(nixieAssets, nAssetsLoc["1"].x, nAssetsLoc["1"].y, nAssetsLoc["1"].w, nAssetsLoc["1"].h, 0, 0, nAssetsLoc["1"].w/2, nAssetsLoc["1"].h/2);
 
             document.getElementById("count_days").innerText = timeLeft.days;
             document.getElementById("count_hours").innerText = timeLeft.hours;
