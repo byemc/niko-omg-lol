@@ -7,7 +7,7 @@
     <title>Countdown</title>
     <link rel="stylesheet" href="./styling.css">
     <style>
-        #nixie {
+        #nixiecontainer {
             /* put in the very middle of the screen */
             position: absolute;
             top: 50%;
@@ -15,11 +15,9 @@
             transform: translate(-50%, -50%);
         }
         #preorder {
-            /* put this under the nixie */
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            text-align: center;
+            position: relative;
+            top: -17px;
         }
         #clickforsound {
             text-align: center;
@@ -31,11 +29,12 @@
 
     <p id="clickforsound">Click for sound</p>
 
-    <canvas width="396" height="86" id="nixie">
-        <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
-    </canvas>
-    <p id="preorder"><a href="https://oneshot.com">Preorder OneShot: World Machine Edition</a></p>
-
+    <div id="nixiecontainer">
+        <canvas width="396" height="86" id="nixie">
+            <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
+        </canvas>
+        <p id="preorder"><a href="https://oneshot.com">Preorder OneShot: World Machine Edition</a></p>
+    </div>
     <script>
         let releaseTime = new Date("September 22, 2022 00:00"); // In the future it might be cool to let you put reminders?
         let timer = document.getElementById("nixie");
