@@ -44,6 +44,8 @@
         let ticktock = true; // 0 = tick, 1 = tock
         let tick = new Audio("./sound/tick.wav");
         let tock = new Audio("./sound/tock.wav");
+        let mus = new Audio("./mus/Countdown.ogg");
+        mus.volume = 0.1;
         tick.volume = 0.2;
         tock.volume = 0.2;
 
@@ -116,21 +118,6 @@
             }
 
         }
-
-        document.addEventListener('mousedown', () => {
-            console.log("clicked");
-            if (!clicked) {
-                clicked = true;
-                console.log("not clicked");
-                let mus = new Audio("./mus/Countdown.ogg");
-                mus.volume = 0.1;
-                mus.onloadeddata = () => {
-                    console.log("loaded");
-                    mus.play();
-                }
-
-            }
-        });
         
         class Countdown {
             constructor(time) {
@@ -312,6 +299,7 @@
                 the_actual_test.then(() => {
                     soundAllowed = true;
                     document.getElementById("clickforsound").style.display = "none";
+                    mus.play();
                 }).catch(error => {
                     console.error("Autoplay prevented.")
                 });
