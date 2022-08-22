@@ -6,13 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown</title>
     <link rel="stylesheet" href="./styling.css">
+    <style>
+        #nixie {
+            /* put in the very middle of the screen */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #preorder {
+            /* put this under the nixie */
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
     <!-- This page counts down until OneShot: World Machine edition is released -->
 
-    <canvas width="500" height="86" id="nixie">
+    <p id="clickforsound">Click for sound</p>
+
+    <canvas width="396" height="86" id="nixie">
         <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
     </div>
+    <p id="preorder"><a href="https://oneshot.com">Preorder OneShot: World Machine Edition</a></p>
 
     <script>
         let releaseTime = new Date("September 22, 2022 00:00"); // In the future it might be cool to let you put reminders?
@@ -20,6 +39,11 @@
         let clicked = false;
         let nixieAssets = new Image();
         nixieAssets.src = "./img/countdown.png";
+        let ticktock = true; // 0 = tick, 1 = tock
+        let tick = new Audio("./sound/tick.wav");
+        let tock = new Audio("./sound/tock.wav");
+        tick.volume = 0.2;
+        tock.volume = 0.2;
 
         const nAssetsLoc = {
             "1": {
@@ -84,8 +108,8 @@
             },
             ":": {
                 "w": 16,
-                "h": 83,
-                "x": 161,
+                "h": 72,
+                "x": 160,
                 "y": 248,
             }
 
@@ -97,10 +121,12 @@
                 clicked = true;
                 console.log("not clicked");
                 let mus = new Audio("./mus/Countdown.ogg");
+                mus.volume = 0.1;
                 mus.onloadeddata = () => {
                     console.log("loaded");
                     mus.play();
                 }
+
             }
         });
         
@@ -176,18 +202,118 @@
             let seconds = timeLeft.seconds.toString().split("");
             console.log(`days: ${days} hours: ${hours} minutes: ${minutes} seconds: ${seconds}`);
 
+            let offset = 0;
 
             // draw each digit onto the canvas with a colon as a separator
             for (let i = 0; i < days.length; i++) {
-                ctx.drawImage(nixieAssets, nAssetsLoc[days[i]].x, nAssetsLoc[days[i]].y, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h, i*32, 0, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h);
+                ctx.drawImage(nixieAssets, nAssetsLoc[days[i]].x, nAssetsLoc[days[i]].y, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h, offset, 0, nAssetsLoc[days[i]].w, nAssetsLoc[days[i]].h);
+                offset += 32;
             }
-            ctx.drawImage(nixieAssets, nAssetsLoc[":"].x, nAssetsLoc[":"].y, nAssetsLoc[":"].w, nAssetsLoc[":"].h, days.length*32, 0, nAssetsLoc[":"].w, nAssetsLoc[":"].h);
+            offset += 10;
+            ctx.drawImage(nixieAssets, nAssetsLoc[":"].x, nAssetsLoc[":"].y, nAssetsLoc[":"].w, nAssetsLoc[":"].h, offset, 11, nAssetsLoc[":"].w, nAssetsLoc[":"].h);
+            offset += 26;
+            for (let i = 0; i < hours.length; i++) {
+                ctx.drawImage(nixieAssets, nAssetsLoc[hours[i]].x, nAssetsLoc[hours[i]].y, nAssetsLoc[hours[i]].w, nAssetsLoc[hours[i]].h, offset, 0, nAssetsLoc[hours[i]].w, nAssetsLoc[hours[i]].h);
+                offset += 32;
+            }
+            offset += 10;
+            ctx.drawImage(nixieAssets, nAssetsLoc[":"].x, nAssetsLoc[":"].y, nAssetsLoc[":"].w, nAssetsLoc[":"].h, offset, 11, nAssetsLoc[":"].w, nAssetsLoc[":"].h);
+            offset += 26;
+            for (let i = 0; i < minutes.length; i++) {
+                ctx.drawImage(nixieAssets, nAssetsLoc[minutes[i]].x, nAssetsLoc[minutes[i]].y, nAssetsLoc[minutes[i]].w, nAssetsLoc[minutes[i]].h, offset, 0, nAssetsLoc[minutes[i]].w, nAssetsLoc[minutes[i]].h);
+                offset += 32;
+            }
+            offset += 10;
+            ctx.drawImage(nixieAssets, nAssetsLoc[":"].x, nAssetsLoc[":"].y, nAssetsLoc[":"].w, nAssetsLoc[":"].h, offset, 11, nAssetsLoc[":"].w, nAssetsLoc[":"].h);
+            offset += 26;
+            for (let i = 0; i < seconds.length; i++) {
+                ctx.drawImage(nixieAssets, nAssetsLoc[seconds[i]].x, nAssetsLoc[seconds[i]].y, nAssetsLoc[seconds[i]].w, nAssetsLoc[seconds[i]].h, offset, 0, nAssetsLoc[seconds[i]].w, nAssetsLoc[seconds[i]].h);
+                offset += 32;
+            }
+
+
 
         }
         // draw();
+
+        let soundAllowed = false;
+
+                // check if sound is allowed to play
+        // autoplay checker
+        var autoplay_test = new Audio("./sound/silence.wav");
+        var the_actual_test = autoplay_test.play();
+
+        if (the_actual_test !== undefined) {
+            the_actual_test.then(() => {
+                soundAllowed = true;
+                document.getElementById("clickforsound").style.display = "none";
+            }).catch(error => {
+                console.error("Autoplay prevented.")
+            });
+        }
+        
+        currentTime = new Date(Date.now());
+        timeLeft = updateShit();
+
+        // add leading zeros to the day until it's 3 digits long
+        if (timeLeft.days < 10) {
+            timeLeft.days = "00" + timeLeft.days;
+        } else if (timeLeft.days < 100) {
+            timeLeft.days = "0" + timeLeft.days;
+        } 
+        
+        // add leading zeros to the hours until it's 2 digits long
+        if (timeLeft.hours < 10) {
+            timeLeft.hours = "0" + timeLeft.hours;
+        }
+
+        // add leading zeros to the minutes until it's 2 digits long
+        if (timeLeft.minutes < 10) {
+            timeLeft.minutes = "0" + timeLeft.minutes;
+        }
+
+        // add leading zeros to the seconds until it's 2 digits long
+        if (timeLeft.seconds < 10) {
+            timeLeft.seconds = "0" + timeLeft.seconds; 
+        }
+
+        // make all the values in timeLeft into strings
+        timeLeft.days = timeLeft.days.toString();
+        timeLeft.hours = timeLeft.hours.toString();
+        timeLeft.minutes = timeLeft.minutes.toString();
+        timeLeft.seconds = timeLeft.seconds.toString();
+
+        console.log(timeLeft);
+        draw(timeLeft);
+
+        document.getElementById("count_days").innerText = timeLeft.days;
+        document.getElementById("count_hours").innerText = timeLeft.hours;
+        document.getElementById("count_mins").innerText = timeLeft.minutes;
+        document.getElementById("count_secs").innerText = timeLeft.seconds;
+
+        if (ticktock) {
+            ticktock = false;
+            tick.play();
+        } else {
+            ticktock = true;
+            tock.play();
+        }
         
         
         setInterval(() => {
+            // check if sound is allowed to play
+            // autoplay checker
+            var autoplay_test = new Audio("./sound/silence.wav");
+            var the_actual_test = autoplay_test.play();
+
+            if (the_actual_test !== undefined) {
+                the_actual_test.then(() => {
+                    soundAllowed = true;
+                    document.getElementById("clickforsound").style.display = "none";
+                }).catch(error => {
+                    console.error("Autoplay prevented.")
+                });
+            }
             
             currentTime = new Date(Date.now());
             let timeLeft = updateShit();
@@ -228,6 +354,13 @@
             document.getElementById("count_mins").innerText = timeLeft.minutes;
             document.getElementById("count_secs").innerText = timeLeft.seconds;
 
+            if (ticktock) {
+                ticktock = false;
+                tick.play();
+            } else {
+                ticktock = true;
+                tock.play();
+            }
         }, 1000)
 
     </script>
