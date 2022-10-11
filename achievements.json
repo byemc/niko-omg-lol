@@ -34,5 +34,10 @@
         "description": "Try to get the same achievement twice.",
         "icon": "/img/niko_upset.png",
         "sound": "/sound/pc_denied.wav"
+    },
+    {
+	"name": "school graduate",
+	"id": "school_graduate",
+	"description": "visit the school project (if you have this, you must've cheated!!!"
     }
 ]
