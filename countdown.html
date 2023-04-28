@@ -33,10 +33,10 @@
         <canvas width="396" height="86" id="nixie">
             <span id="count_days">000</span>:<span id="count_hours">00</span>:<span id="count_mins">00</span>:<span id="count_secs">00</span>
         </canvas>
-        <p id="preorder"><a href="https://oneshot.dangenentertainment.com">Preorder OneShot: World Machine Edition</a></p>
+        <p id="preorder">Current event: New Years 2024 (your time zone)</p>
     </div>
     <script>
-        let releaseTime = new Date(1663819200000); // In the future it might be cool to let you put reminders?
+        let releaseTime = new Date("00:00 Jan 1 2024"); // In the future it might be cool to let you put reminders?
         let timer = document.getElementById("nixie");
         let clicked = false;
         let nixieAssets = new Image();
